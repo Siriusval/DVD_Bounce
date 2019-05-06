@@ -65,9 +65,16 @@ window.addEventListener('load', function () {
 
     ajouterImages();
     resizeCanvas();
+    randomPosition();
     changeColor();
   }
 
+  //Commencer par une position aleatoire dans le canvas
+  var randomPosition = function () {
+    element.x = Math.floor(Math.random()* posMaxX);
+    element.y = Math.floor(Math.random()* posMaxY);
+  }
+  //Ajouter une image de reference pour chaque couleur
   var ajouterImages = function () {
     for(var i = 0; i < couleurs.length ; i++) {
       couleurs[i].image = new Image();
@@ -98,14 +105,17 @@ window.addEventListener('load', function () {
 
    }
 
+   var randomColor = function () {
+     do {
+       var newColor = Math.floor( Math.random() * couleurs.length);
+     } while(newColor == element.couleurActuelle);
+
+     return newColor ;
+   }
   //Changer la couleur lors du rebond
   var changeColor = function () {
-     //Regler le style
-     element.couleurActuelle++;
-     //Si la limite des couleurs est atteinte, reviens a la premiere
-     if (element.couleurActuelle === couleurs.length) {
-       element.couleurActuelle = 0;
-     }
+
+     element.couleurActuelle = randomColor();
      ctx.fillStyle = couleurs[element.couleurActuelle].rgb;
      imagePath = couleurs[element.couleurActuelle].image;
 
